@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqliteWrapper", "SqliteWrapper\SqliteWrapper.csproj", "{6EB67DEA-E7C3-4BE4-8539-A7067A39C768}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{1F7EF55E-11B0-4858-A642-807BC9FA0E78}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApp", "SampleApp\SampleApp.csproj", "{6F8F3DAD-5249-4CF1-96C6-641C06F6B0FC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6EB67DEA-E7C3-4BE4-8539-A7067A39C768}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EB67DEA-E7C3-4BE4-8539-A7067A39C768}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EB67DEA-E7C3-4BE4-8539-A7067A39C768}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EB67DEA-E7C3-4BE4-8539-A7067A39C768}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F7EF55E-11B0-4858-A642-807BC9FA0E78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F7EF55E-11B0-4858-A642-807BC9FA0E78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F7EF55E-11B0-4858-A642-807BC9FA0E78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F7EF55E-11B0-4858-A642-807BC9FA0E78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F8F3DAD-5249-4CF1-96C6-641C06F6B0FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F8F3DAD-5249-4CF1-96C6-641C06F6B0FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F8F3DAD-5249-4CF1-96C6-641C06F6B0FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F8F3DAD-5249-4CF1-96C6-641C06F6B0FC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
