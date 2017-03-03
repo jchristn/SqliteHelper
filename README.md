@@ -2,7 +2,7 @@
 
 [![][nuget-img]][nuget]
 
-[nuget]:     https://www.nuget.org/packages/SqliteWrapper/
+[nuget]:     https://www.nuget.org/packages/SqliteHelper/
 [nuget-img]: https://badge.fury.io/nu/Object.svg
 
 Simple database wrapper for Sqlite written in C#.  

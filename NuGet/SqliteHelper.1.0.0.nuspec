@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
-        <id>SqliteWrapper</id>
+        <id>SqliteHelper</id>
         <version>1.0.0</version>
-        <title>SqliteWrapper</title>
+        <title>SqliteHelper</title>
         <authors>Joel Christner</authors>
         <owners>Joel Christner</owners>
         <licenseUrl>https://github.com/jchristn/SqliteWrapper/blob/master/LICENSE.txt</licenseUrl>
@@ -20,11 +20,7 @@
         </dependencies>
     </metadata>
     <files>
-        <file src="lib\DedupeCore.dll" target="lib\DedupeCore.dll" />
-        <file src="lib\DedupeCore.pdb" target="lib\DedupeCore.pdb" />
-        <file src="lib\DedupeLibrary.dll" target="lib\DedupeLibrary.dll" />
-        <file src="lib\DedupeLibrary.pdb" target="lib\DedupeLibrary.pdb" />
-        <file src="lib\DedupeLibraryXL.dll" target="lib\DedupeLibraryXL.dll" />
-        <file src="lib\DedupeLibraryXL.pdb" target="lib\DedupeLibraryXL.pdb" />
+        <file src="lib\SqliteWrapper.dll" target="lib\SqliteWrapper.dll" />
+        <file src="lib\SqliteWrapper.pdb" target="lib\SqliteWrapper.pdb" />
     </files>
 </package>
