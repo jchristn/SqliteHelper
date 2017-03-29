@@ -326,7 +326,7 @@ namespace SqliteWrapper
             //
             // limit
             //
-            if (maxResults > 0)
+            if (maxResults != null && maxResults > 0)
             {
                 if (indexStart != null && indexStart >= 0)
                 {

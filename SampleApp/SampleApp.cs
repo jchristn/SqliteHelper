@@ -43,45 +43,24 @@ namespace SampleApp
             Console.WriteLine("Created ID: " + sql.Insert("company", d4).ToString());
 
             Console.WriteLine("Selecting companies with postal > 70000");
-            Expression eRetrieve1 = new Expression
-            {
-                LeftTerm = "postal",
-                Operator = Operators.GreaterThan,
-                RightTerm = 70000
-            };
 
+            Expression eRetrieve1 = new Expression("postal", Operators.GreaterThan, 70000);
             DataTable selectResult1 = sql.Select("company", 0, null, null, eRetrieve1, null);
             Console.WriteLine("Retrieved " + selectResult1.Rows.Count + " rows");
 
             Console.WriteLine("Selecting companies with postal > 70000 or postal < 50000");
             Expression eRetrieve2 = new Expression
             {
-                LeftTerm = new Expression
-                {
-                    LeftTerm = "postal",
-                    Operator = Operators.GreaterThan,
-                    RightTerm = 70000
-                },
+                LeftTerm = new Expression("postal", Operators.GreaterThan, 70000),
                 Operator = Operators.Or,
-                RightTerm = new Expression
-                {
-                    LeftTerm = "postal",
-                    Operator = Operators.LessThan,
-                    RightTerm = 50000
-                }
+                RightTerm = new Expression("postal", Operators.LessThan, 50000)
             };
 
             DataTable selectResult2 = sql.Select("company", 0, null, null, eRetrieve2, null);
             Console.WriteLine("Retrieved " + selectResult2.Rows.Count + " rows");
 
             Console.WriteLine("Deleting records");
-            Expression eDelete = new Expression
-            {
-                LeftTerm = "id",
-                Operator = Operators.GreaterThan,
-                RightTerm = 0
-            };
-
+            Expression eDelete = new Expression("id", Operators.GreaterThan, 0);
             sql.Delete("company", eDelete);
         }
     }
