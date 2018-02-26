@@ -12,19 +12,21 @@ namespace SqliteWrapper
     /// <summary>
     /// Lightweight wrapper for Sqlite.
     /// </summary>
-    public class DatabaseClient
+    public class DatabaseClient : IDisposable
     {
         #region Public-Members
+
+        public bool Debug;
 
         #endregion
 
         #region Private-Members
 
-        private string Filename;
-        private string ConnectionString;
-        private SqliteConnection Connection;
-        private bool Debug;
-
+        private bool _Disposed = false;
+        private string _Filename;
+        private string _ConnectionString;
+        private SqliteConnection _Connection;
+         
         #endregion
 
         #region Constructors-and-Factories
@@ -38,7 +40,7 @@ namespace SqliteWrapper
         {
             if (String.IsNullOrEmpty(filename)) throw new ArgumentNullException(nameof(filename));
 
-            Filename = filename;
+            _Filename = filename;
             Debug = debug;
 
             BuildConnectionString();
@@ -48,6 +50,15 @@ namespace SqliteWrapper
         #endregion
 
         #region Public-Methods
+
+        /// <summary>
+        /// Tear down the database client and dispose of resources.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
         /// <summary>
         /// Use to sanitize values you wish to INSERT.
@@ -156,7 +167,7 @@ namespace SqliteWrapper
 
             try
             {
-                using (SqliteCommand cmd = new SqliteCommand(query, Connection))
+                using (SqliteCommand cmd = new SqliteCommand(query, _Connection))
                 {
                     using (SqliteDataReader rdr = cmd.ExecuteReader())
                     {
@@ -192,7 +203,7 @@ namespace SqliteWrapper
             {
                 if (String.IsNullOrEmpty(query)) return false;
 
-                using (SqliteCommand cmd = new SqliteCommand(query, Connection))
+                using (SqliteCommand cmd = new SqliteCommand(query, _Connection))
                 {
                     result = cmd.ExecuteScalar();
                     success = true;
@@ -219,14 +230,14 @@ namespace SqliteWrapper
         {
             if (String.IsNullOrEmpty(destination)) throw new ArgumentNullException(nameof(destination));
 
-            using (SqliteCommand cmd = new SqliteCommand("BEGIN IMMEDIATE;", Connection))
+            using (SqliteCommand cmd = new SqliteCommand("BEGIN IMMEDIATE;", _Connection))
             {
                 cmd.ExecuteNonQuery();
             }
             
-            File.Copy(Filename, destination, true);
+            File.Copy(_Filename, destination, true);
         
-            using (SqliteCommand cmd = new SqliteCommand("ROLLBACK;", Connection))
+            using (SqliteCommand cmd = new SqliteCommand("ROLLBACK;", _Connection))
             {
                 cmd.ExecuteNonQuery();
             }
@@ -543,10 +554,29 @@ namespace SqliteWrapper
 
             return;
         }
-        
+
         #endregion
 
         #region Private-Methods
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_Disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                if (_Connection != null)
+                {
+                    _Connection.Dispose();
+                    if (_Connection.State == ConnectionState.Open) _Connection.Close();
+                }
+            }
+
+            _Disposed = true;
+        }
 
         private void CreateFile(string filename)
         {
@@ -558,13 +588,13 @@ namespace SqliteWrapper
 
         private void BuildConnectionString()
         {
-            ConnectionString = "Data Source=" + Filename + ";Version=3;";
+            _ConnectionString = "Data Source=" + _Filename + ";Version=3;";
         }
 
         private void Connect()
         {
-            Connection = new SqliteConnection(ConnectionString);
-            Connection.Open();
+            _Connection = new SqliteConnection(_ConnectionString);
+            _Connection.Open();
         }
 
         #endregion
