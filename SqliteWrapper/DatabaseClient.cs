@@ -576,6 +576,9 @@ namespace SqliteWrapper
             }
 
             _Disposed = true;
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
 
         private void CreateFile(string filename)
