@@ -558,6 +558,64 @@ namespace SqliteWrapper
             }
         }
 
+        /// <summary>
+        /// Prepends a new Expression using the supplied left term, operator, and right term using an AND clause.
+        /// </summary>
+        /// <param name="left">The left term of the expression; can either be a string term or a nested Expression.</param>
+        /// <param name="oper">The operator.</param>
+        /// <param name="right">The right term of the expression; can either be an object for comparison or a nested Expression.</param>
+        public void PrependAnd(object left, Operators oper, object right)
+        {
+            Expression e = new Expression(left, oper, right);
+            PrependAnd(e);
+        }
+
+        /// <summary>
+        /// Prepends the Expression with the supplied Expression using an AND clause.
+        /// </summary>
+        /// <param name="prepend">The Expression to prepend.</param> 
+        public void PrependAnd(Expression prepend)
+        {
+            if (prepend == null) throw new ArgumentNullException(nameof(prepend));
+
+            Expression orig = new Expression(this.LeftTerm, this.Operator, this.RightTerm);
+            Expression e = PrependAndClause(prepend, orig);
+            LeftTerm = e.LeftTerm;
+            Operator = e.Operator;
+            RightTerm = e.RightTerm;
+
+            return;
+        }
+
+        /// <summary>
+        /// Prepends a new Expression using the supplied left term, operator, and right term using an OR clause.
+        /// </summary>
+        /// <param name="left">The left term of the expression; can either be a string term or a nested Expression.</param>
+        /// <param name="oper">The operator.</param>
+        /// <param name="right">The right term of the expression; can either be an object for comparison or a nested Expression.</param>
+        public void PrependOr(object left, Operators oper, object right)
+        {
+            Expression e = new Expression(left, oper, right);
+            PrependOr(e);
+        }
+
+        /// <summary>
+        /// Prepends the Expression with the supplied Expression using an OR clause.
+        /// </summary>
+        /// <param name="prepend">The Expression to prepend.</param> 
+        public void PrependOr(Expression prepend)
+        {
+            if (prepend == null) throw new ArgumentNullException(nameof(prepend));
+
+            Expression orig = new Expression(this.LeftTerm, this.Operator, this.RightTerm);
+            Expression e = PrependOrClause(prepend, orig);
+            LeftTerm = e.LeftTerm;
+            Operator = e.Operator;
+            RightTerm = e.RightTerm;
+
+            return;
+        }
+
         #endregion
 
         #region Private-Methods
