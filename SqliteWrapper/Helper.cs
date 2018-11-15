@@ -227,7 +227,7 @@ namespace SqliteWrapper
             if (String.IsNullOrEmpty(data)) return false;
             foreach (char c in data)
             {
-                if ((int)c > 128) return true;
+                if ((int)c > 256) return true;
             }
             return false;
         }
