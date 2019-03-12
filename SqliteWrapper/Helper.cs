@@ -70,37 +70,7 @@ namespace SqliteWrapper
             }
             return default(T);
         }
-
-        /// <summary>
-        /// Converts a DataTable to a List of objects of a given type.
-        /// </summary>
-        /// <typeparam name="T">The type of object to which each DataRow within the DataTable should be converted.</typeparam>
-        /// <param name="t">A DataTable.</param>
-        /// <returns>A list of objects of type T containing values from each DataRow within the DataTable.</returns>
-        public static List<T> DataTableToListObject<T>(DataTable t)
-        {
-            if (t == null) throw new ArgumentNullException(nameof(t));
-            if (t.Rows.Count < 1) throw new ArgumentException("No rows in DataTable");
-
-            var columnNames = t.Columns.Cast<DataColumn>()
-                    .Select(c => c.ColumnName)
-                    .ToList();
-            var properties = typeof(T).GetProperties();
-            return t.AsEnumerable().Select(row =>
-            {
-                var objT = Activator.CreateInstance<T>();
-                foreach (var pro in properties)
-                {
-                    if (columnNames.Contains(pro.Name))
-                    {
-                        PropertyInfo pI = objT.GetType().GetProperty(pro.Name);
-                        pro.SetValue(objT, row[pro.Name] == DBNull.Value ? null : Convert.ChangeType(row[pro.Name], pI.PropertyType));
-                    }
-                }
-                return objT;
-            }).ToList();
-        }
-
+         
         /// <summary>
         /// Convert a DataRow to an object of type T.
         /// </summary>
