@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Mono.Data.Sqlite;
 
 namespace SqliteWrapper
 {
@@ -25,7 +25,7 @@ namespace SqliteWrapper
         private bool _Disposed = false;
         private string _Filename;
         private string _ConnectionString;
-        private SqliteConnection _Connection;
+        private SQLiteConnection _Connection;
          
         #endregion
 
@@ -167,9 +167,9 @@ namespace SqliteWrapper
 
             try
             {
-                using (SqliteCommand cmd = new SqliteCommand(query, _Connection))
+                using (SQLiteCommand cmd = new SQLiteCommand(query, _Connection))
                 {
-                    using (SqliteDataReader rdr = cmd.ExecuteReader())
+                    using (SQLiteDataReader rdr = cmd.ExecuteReader())
                     {
                         result.Load(rdr);
                         return result;
@@ -203,7 +203,7 @@ namespace SqliteWrapper
             {
                 if (String.IsNullOrEmpty(query)) return false;
 
-                using (SqliteCommand cmd = new SqliteCommand(query, _Connection))
+                using (SQLiteCommand cmd = new SQLiteCommand(query, _Connection))
                 {
                     result = cmd.ExecuteScalar();
                     success = true;
@@ -230,14 +230,14 @@ namespace SqliteWrapper
         {
             if (String.IsNullOrEmpty(destination)) throw new ArgumentNullException(nameof(destination));
 
-            using (SqliteCommand cmd = new SqliteCommand("BEGIN IMMEDIATE;", _Connection))
+            using (SQLiteCommand cmd = new SQLiteCommand("BEGIN IMMEDIATE;", _Connection))
             {
                 cmd.ExecuteNonQuery();
             }
             
             File.Copy(_Filename, destination, true);
         
-            using (SqliteCommand cmd = new SqliteCommand("ROLLBACK;", _Connection))
+            using (SQLiteCommand cmd = new SQLiteCommand("ROLLBACK;", _Connection))
             {
                 cmd.ExecuteNonQuery();
             }
@@ -585,7 +585,7 @@ namespace SqliteWrapper
         {
             if (!File.Exists(filename))
             {
-                SqliteConnection.CreateFile(filename);
+                SQLiteConnection.CreateFile(filename);
             }
         }
 
@@ -596,7 +596,7 @@ namespace SqliteWrapper
 
         private void Connect()
         {
-            _Connection = new SqliteConnection(_ConnectionString);
+            _Connection = new SQLiteConnection(_ConnectionString);
             _Connection.Open();
         }
 

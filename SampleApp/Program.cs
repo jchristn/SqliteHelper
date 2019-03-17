@@ -8,7 +8,7 @@ using SqliteWrapper;
 
 namespace SampleApp
 {
-    class SampleApp
+    class Program
     {
         static void Main(string[] args)
         {

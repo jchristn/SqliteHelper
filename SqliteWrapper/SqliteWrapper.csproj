@@ -4,7 +4,7 @@
     <TargetFrameworks>netstandard2.0;net452</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>SqliteHelper</PackageId>
-    <Version>1.0.6</Version>
+    <Version>1.0.8</Version>
     <Authors>Joel Christner</Authors>
     <Product>SqliteHelper</Product>
     <Description>Simple wrapper for Sqlite databases written in C#.  You must manually add sqlite3.dll to your project and set it to 'copy to output always'.</Description>
@@ -14,7 +14,17 @@
     <PackageLicenseUrl>https://github.com/jchristn/SqliteWrapper/blob/master/LICENSE.txt</PackageLicenseUrl>
     <RepositoryType>Github</RepositoryType>
     <PackageTags>sqlite database wrapper dbms</PackageTags>
-    <PackageReleaseNotes>Retarget to support both .NET Core 2.0 and .NET Framework 4.5.2</PackageReleaseNotes>
+    <PackageReleaseNotes>Moved from Mono.Data.Sqlite to System.Data.Sqlite, no longer focusing on supporting Mono.</PackageReleaseNotes>
+    <AssemblyVersion>1.0.8.0</AssemblyVersion>
+    <FileVersion>1.0.8.0</FileVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
+    <CodeAnalysisRuleSet />
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
+    <CodeAnalysisRuleSet />
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,12 +32,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="sqlite3.dll" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
-    <PackageReference Include="Mono.Data.Sqlite" Version="1.0.61" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.110" />
   </ItemGroup>
 
 </Project>

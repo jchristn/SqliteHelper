@@ -8,7 +8,7 @@ using SqliteWrapper;
 
 namespace Test
 {
-    class Test
+    class Program
     {
         static bool RunForever = true;
         static string Filename;

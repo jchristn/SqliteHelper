@@ -7,10 +7,6 @@
 
 Simple database wrapper for Sqlite written in C#.  
 
-For a sample app exercising this library, refer to the test project contained within the solution.
-
-As of v1.0.6, SqliteWrapper has been retargeted to both .NET Core 2.0 and .NET Framework 4.5.2.
-
 ## Description
 
 SqliteWrapper is a simple database wrapper for Sqlite databases written in C#.   
@@ -25,13 +21,9 @@ Core features:
 
 Please contact me for any issues or enhancement requests!  I'm at joel dot christner at gmail dot com.  
 
-## Installing with NuGet
+## New in v1.0.8
 
-Due to some unforseen issues with NuGet, you must download and add ```sqlite3.dll``` to your project manually.  Set it to copy to output always.
-
-## New in v1.0.5
-
-- Retarget to support both .NET Core 2.0 and .NET Framework 4.5.2.
+- Migrate from Mono.Data.Sqlite to System.Data.Sqlite
 
 ## A Note on Sanitization
 
@@ -47,13 +39,10 @@ Refer to projects SampleApp, TestNetFramework, and TestNetCore for examples.
 
 Use indexStart, maxResults, and orderByClause to retrieve paginated results.  The query will retrieve maxResults records starting at row number indexStart using an ordering based on orderByClause.  See the example in the SampleApp project.
 
-## Running under Mono
-
-This library uses Mono.Data.Sqlite which requires ```sqlite3.dll```.  sqlite3.dll has been manually added to each project with its copy setting set to "always copy".  You may want to use the Mono AOT (ahead of time) compiler prior to using any binary that includes this library on Mono.
-
 ## Version History
 
 v1.0.x
+- Retarget to .NET Core 2.0 and .NET Framework 4.5.2
 - Fix for extended ASCII on INSERT
 - New methods for Expression
 - New simplified constructor for Expression objects
