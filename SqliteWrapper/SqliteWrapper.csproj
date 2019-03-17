@@ -4,10 +4,10 @@
     <TargetFrameworks>netstandard2.0;net452</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>SqliteHelper</PackageId>
-    <Version>1.0.8</Version>
+    <Version>1.0.9</Version>
     <Authors>Joel Christner</Authors>
     <Product>SqliteHelper</Product>
-    <Description>Simple wrapper for Sqlite databases written in C#.  You must manually add sqlite3.dll to your project and set it to 'copy to output always'.</Description>
+    <Description>Simple wrapper for Sqlite databases written in C#.</Description>
     <Copyright>(c)2019 Joel Christner</Copyright>
     <PackageProjectUrl>https://github.com/jchristn/SqliteWrapper</PackageProjectUrl>
     <RepositoryUrl>https://github.com/jchristn/SqliteWrapper</RepositoryUrl>
@@ -15,8 +15,8 @@
     <RepositoryType>Github</RepositoryType>
     <PackageTags>sqlite database wrapper dbms</PackageTags>
     <PackageReleaseNotes>Moved from Mono.Data.Sqlite to System.Data.Sqlite, no longer focusing on supporting Mono.</PackageReleaseNotes>
-    <AssemblyVersion>1.0.8.0</AssemblyVersion>
-    <FileVersion>1.0.8.0</FileVersion>
+    <AssemblyVersion>1.0.9.0</AssemblyVersion>
+    <FileVersion>1.0.9.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
