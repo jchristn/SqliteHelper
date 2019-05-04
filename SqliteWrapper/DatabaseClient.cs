@@ -568,10 +568,17 @@ namespace SqliteWrapper
 
             if (disposing)
             {
-                if (_Connection != null)
+                try
                 {
-                    _Connection.Dispose();
-                    if (_Connection.State == ConnectionState.Open) _Connection.Close();
+                    if (_Connection != null)
+                    {
+                        _Connection.Dispose();
+                        if (_Connection.State == ConnectionState.Open) _Connection.Close();
+                    }
+                }
+                catch (Exception)
+                {
+
                 }
             }
 
