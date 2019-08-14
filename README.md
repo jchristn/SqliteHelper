@@ -17,6 +17,12 @@ Core features:
 - support for SELECT, INSERT, UPDATE, and DELETE, or raw queries
 - built-in sanitization
 
+## Important
+
+For .NET Framework, you may need to add the ```System.Data.SQLite.Core``` NuGet package, clean, and then re-build.  This should place ```x86``` and ```x64``` folders in your build output.
+
+This is particularly helpful if you are experiencing the exception ```System.DllNotFoundException: Unable to load DLL 'SQLite.Interop.dll': The specified module could not be found.```
+
 ## Help and Support
 
 Please contact me for any issues or enhancement requests!  I'm at joel dot christner at gmail dot com.  

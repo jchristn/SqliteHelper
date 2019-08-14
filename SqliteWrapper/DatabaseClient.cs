@@ -37,7 +37,7 @@ namespace SqliteWrapper
         /// <param name="filename">The filename.</param>
         /// <param name="debug">Enable or disable console logging.</param>
         public DatabaseClient(string filename, bool debug)
-        {
+        { 
             if (String.IsNullOrEmpty(filename)) throw new ArgumentNullException(nameof(filename));
 
             _Filename = filename;
@@ -57,7 +57,8 @@ namespace SqliteWrapper
         public void Dispose()
         {
             Dispose(true);
-            GC.SuppressFinalize(this);
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
 
         /// <summary>
@@ -560,7 +561,7 @@ namespace SqliteWrapper
         #region Private-Methods
 
         protected virtual void Dispose(bool disposing)
-        {
+        { 
             if (_Disposed)
             {
                 return;
@@ -572,8 +573,8 @@ namespace SqliteWrapper
                 {
                     if (_Connection != null)
                     {
+                        _Connection.Close();
                         _Connection.Dispose();
-                        if (_Connection.State == ConnectionState.Open) _Connection.Close();
                     }
                 }
                 catch (Exception)
@@ -585,7 +586,7 @@ namespace SqliteWrapper
             _Disposed = true;
 
             GC.Collect();
-            GC.WaitForPendingFinalizers();
+            GC.WaitForPendingFinalizers();            
         }
 
         private void CreateFile(string filename)
@@ -598,7 +599,7 @@ namespace SqliteWrapper
 
         private void BuildConnectionString()
         {
-            _ConnectionString = "Data Source=" + _Filename + ";Version=3;";
+            _ConnectionString = "Data Source=" + _Filename + ";Version=3;Pooling=False";
         }
 
         private void Connect()

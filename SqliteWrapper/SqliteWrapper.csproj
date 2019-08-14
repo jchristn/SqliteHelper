@@ -4,7 +4,7 @@
     <TargetFrameworks>netstandard2.0;net452</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>SqliteHelper</PackageId>
-    <Version>1.0.12</Version>
+    <Version>1.0.13</Version>
     <Authors>Joel Christner</Authors>
     <Product>SqliteHelper</Product>
     <Description>Simple wrapper for Sqlite databases written in C#.</Description>
@@ -14,9 +14,9 @@
     <PackageLicenseUrl>https://github.com/jchristn/SqliteWrapper/blob/master/LICENSE.txt</PackageLicenseUrl>
     <RepositoryType>Github</RepositoryType>
     <PackageTags>sqlite database wrapper dbms</PackageTags>
-    <PackageReleaseNotes>Fixed missing DLL</PackageReleaseNotes>
-    <AssemblyVersion>1.0.12.0</AssemblyVersion>
-    <FileVersion>1.0.12.0</FileVersion>
+    <PackageReleaseNotes>Dispose fix</PackageReleaseNotes>
+    <AssemblyVersion>1.0.13.0</AssemblyVersion>
+    <FileVersion>1.0.13.0</FileVersion>
     <PackageIconUrl>https://raw.githubusercontent.com/jchristn/sqlitewrapper/master/assets/icon.ico</PackageIconUrl>
   </PropertyGroup>
 
