@@ -27,9 +27,9 @@ This is particularly helpful if you are experiencing the exception ```System.Dll
 
 Please contact me for any issues or enhancement requests!  I'm at joel dot christner at gmail dot com.  
 
-## New in v1.0.8
+## New in v1.0.14
 
-- Migrate from Mono.Data.Sqlite to System.Data.Sqlite
+- XML documentation
 
 ## A Note on Sanitization
 
@@ -47,9 +47,4 @@ Use indexStart, maxResults, and orderByClause to retrieve paginated results.  Th
 
 ## Version History
 
-v1.0.x
-- Retarget to .NET Core 2.0 and .NET Framework 4.5.2
-- Fix for extended ASCII on INSERT
-- New methods for Expression
-- New simplified constructor for Expression objects
-- New static Helper methods for converting DataTable objects to various useful types (List<Dictionary>, Dictionary, List<dynamic>, dynamic)
+Please refer to CHANGELOG.md.

@@ -16,6 +16,9 @@ namespace SqliteWrapper
     {
         #region Public-Members
 
+        /// <summary>
+        /// Enable or disable console debugging.
+        /// </summary>
         public bool Debug;
 
         #endregion
@@ -159,8 +162,7 @@ namespace SqliteWrapper
         /// Execute a SQL query.
         /// </summary>
         /// <param name="query">The query.</param>
-        /// <param name="result">DataTable containing results.</param>
-        /// <returns>Boolean indicating success or failure.</returns>
+        /// <returns>DataTable containing the query result.</returns>
         public DataTable Query(string query)
         {
             if (String.IsNullOrEmpty(query)) throw new ArgumentNullException(nameof(query));
@@ -193,8 +195,7 @@ namespace SqliteWrapper
         /// Execute a scalar SQL query (generally multiple statements in a single query).
         /// </summary>
         /// <param name="query">The query.</param>
-        /// <param name="result">Object containing result from the query.</param>
-        /// <returns>Boolean indicating success or failure.</returns>
+        /// <returns>Object containing result from the query.</returns>
         public object QueryScalar(string query)
         {
             object result = null;
@@ -560,6 +561,10 @@ namespace SqliteWrapper
 
         #region Private-Methods
 
+        /// <summary>
+        /// Dispose of resources.
+        /// </summary>
+        /// <param name="disposing">Disposing.</param>
         protected virtual void Dispose(bool disposing)
         { 
             if (_Disposed)

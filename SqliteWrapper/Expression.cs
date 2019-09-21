@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace SqliteWrapper
 {
+    /// <summary>
+    /// Expression, used to build the WHERE clause in a query.
+    /// </summary>
     public class Expression
     {
         #region Constructor
