@@ -27,7 +27,7 @@ This is particularly helpful if you are experiencing the exception ```System.Dll
 
 Please contact me for any issues or enhancement requests!  I'm at joel dot christner at gmail dot com.  
 
-## New in v1.0.14
+## New in v1.0.15
 
 - XML documentation
 

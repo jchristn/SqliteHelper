@@ -87,7 +87,7 @@
             </summary>
             <param name="tableName">The table in which you wish to INSERT.</param>
             <param name="keyValuePairs">The key-value pairs for the row you wish to INSERT.</param>
-            <returns>A DataTable containing the results.</returns>
+            <returns>Object containing last inserted row ID; generally should be cast to an integer.</returns>
         </member>
         <member name="M:SqliteWrapper.DatabaseClient.Update(System.String,System.Collections.Generic.Dictionary{System.String,System.Object},SqliteWrapper.Expression)">
             <summary>

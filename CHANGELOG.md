@@ -2,11 +2,15 @@
 
 ## Current Version
 
+v1.0.15
+
+- XML documentation fix
+
+## Previous Versions
+
 v1.0.14
 
 - XML documentation
-
-## Previous Versions
 
 v1.0.x
 

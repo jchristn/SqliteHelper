@@ -360,7 +360,7 @@ namespace SqliteWrapper
         /// </summary>
         /// <param name="tableName">The table in which you wish to INSERT.</param>
         /// <param name="keyValuePairs">The key-value pairs for the row you wish to INSERT.</param>
-        /// <returns>A DataTable containing the results.</returns>
+        /// <returns>Object containing last inserted row ID; generally should be cast to an integer.</returns>
         public object Insert(string tableName, Dictionary<string, object> keyValuePairs)
         {
             if (String.IsNullOrEmpty(tableName)) throw new ArgumentNullException(nameof(tableName));
