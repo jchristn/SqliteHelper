@@ -27,9 +27,9 @@ This is particularly helpful if you are experiencing the exception ```System.Dll
 
 Please contact me for any issues or enhancement requests!  I'm at joel dot christner at gmail dot com.  
 
-## New in v1.0.15
+## New in v1.1.0
 
-- XML documentation
+- Breaking changes; improved logging configuration
 
 ## A Note on Sanitization
 
