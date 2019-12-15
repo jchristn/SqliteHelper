@@ -10,23 +10,23 @@ namespace Test
 {
     class Program
     {
-        static bool RunForever = true;
-        static string Filename;
-        static DatabaseClient Sql;
+        static bool _RunForever = true;
+        static string _Filename;
+        static DatabaseClient _Database;
 
         static void Main(string[] args)
         {
-            while (String.IsNullOrEmpty(Filename))
+            while (String.IsNullOrEmpty(_Filename))
             {
                 Console.Write("Filename: ");
-                Filename = Console.ReadLine();
+                _Filename = Console.ReadLine();
             }
 
-            Sql = new DatabaseClient(Filename, false);
+            _Database = new DatabaseClient(_Filename);
 
             Console.WriteLine("Type '?' for help.");
 
-            while (RunForever)
+            while (_RunForever)
             {
                 Console.Write("> ");
                 string userInput = Console.ReadLine();
@@ -46,7 +46,7 @@ namespace Test
 
                     case "q":
                     case "Q":
-                        RunForever = false;
+                        _RunForever = false;
                         break;
 
                     case "cls":
@@ -58,7 +58,7 @@ namespace Test
                         Console.Write("Backup filename > ");
                         userInput = null;
                         while (String.IsNullOrEmpty(userInput)) userInput = Console.ReadLine();
-                        Sql.Backup(userInput);
+                        _Database.Backup(userInput);
                         break;
 
                     case "scalar":
@@ -68,7 +68,7 @@ namespace Test
                         object ret = null;
                         try
                         {
-                            ret = Sql.QueryScalar(userInput);
+                            ret = _Database.QueryScalar(userInput);
                         }
                         catch (Exception e1)
                         {
@@ -82,7 +82,7 @@ namespace Test
                         DataTable result = null;
                         try
                         {
-                            result = Sql.Query(userInput);
+                            result = _Database.Query(userInput);
                         }
                         catch (Exception e2)
                         {

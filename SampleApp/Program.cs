@@ -13,7 +13,11 @@ namespace SampleApp
         static void Main(string[] args)
         {
             Console.WriteLine("Opening file");
-            DatabaseClient sql = new SqliteWrapper.DatabaseClient("test", true);
+            DatabaseClient sql = new DatabaseClient("test");
+
+            sql.Logger = Logger;
+            sql.LogQueries = true;
+            sql.LogResults = true;
 
             Console.WriteLine("Creating table...");
             string createTableQuery =
@@ -62,6 +66,11 @@ namespace SampleApp
             Console.WriteLine("Deleting records");
             Expression eDelete = new Expression("id", Operators.GreaterThan, 0);
             sql.Delete("company", eDelete);
+        }
+
+        private static void Logger(string msg)
+        {
+            Console.WriteLine(msg);
         }
     }
 }

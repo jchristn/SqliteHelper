@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -15,21 +16,32 @@ namespace SqliteWrapper
     public class DatabaseClient : IDisposable
     {
         #region Public-Members
+         
+        /// <summary>
+        /// Enable or disable logging of queries using the Logger(string msg) method (default: false).
+        /// </summary>
+        public bool LogQueries = false;
 
         /// <summary>
-        /// Enable or disable console debugging.
+        /// Enable or disable logging of query results using the Logger(string msg) method (default: false).
         /// </summary>
-        public bool Debug;
+        public bool LogResults = false;
+         
+        /// <summary>
+        /// Method to invoke when sending a log message.
+        /// </summary>
+        public Action<string> Logger = null;
 
         #endregion
 
         #region Private-Members
 
         private bool _Disposed = false;
+        private bool _EnableLogging = false; 
         private string _Filename;
         private string _ConnectionString;
         private SQLiteConnection _Connection;
-         
+
         #endregion
 
         #region Constructors-and-Factories
@@ -37,15 +49,13 @@ namespace SqliteWrapper
         /// <summary>
         /// Initialize Sqlite client using a new file or existing file.
         /// </summary>
-        /// <param name="filename">The filename.</param>
-        /// <param name="debug">Enable or disable console logging.</param>
-        public DatabaseClient(string filename, bool debug)
-        { 
+        /// <param name="filename">The filename.</param> 
+        public DatabaseClient(string filename)
+        {
             if (String.IsNullOrEmpty(filename)) throw new ArgumentNullException(nameof(filename));
 
             _Filename = filename;
-            Debug = debug;
-
+             
             BuildConnectionString();
             Connect();
         }
@@ -168,6 +178,8 @@ namespace SqliteWrapper
             if (String.IsNullOrEmpty(query)) throw new ArgumentNullException(nameof(query));
             DataTable result = new DataTable();
 
+            if (LogQueries && Logger != null) Logger("[Sqlite] Query: " + query);
+
             try
             {
                 using (SQLiteCommand cmd = new SQLiteCommand(query, _Connection))
@@ -181,11 +193,15 @@ namespace SqliteWrapper
             }
             finally
             {
-                if (Debug)
+                if (LogResults && Logger != null)
                 {
                     if (result != null)
                     {
-                        Console.WriteLine(result.Rows.Count + " rows, query: " + query);
+                        Logger("[Sqlite] Query result: " + result.Rows.Count + " rows");
+                    }
+                    else
+                    {
+                        Logger("[Sqlite] Query result: null");
                     }
                 }
             }
@@ -198,8 +214,9 @@ namespace SqliteWrapper
         /// <returns>Object containing result from the query.</returns>
         public object QueryScalar(string query)
         {
-            object result = null;
-            bool success = false;
+            object result = null; 
+
+            if (LogQueries && Logger != null) Logger("[Sqlite] QueryScalar: " + query);
 
             try
             {
@@ -207,18 +224,21 @@ namespace SqliteWrapper
 
                 using (SQLiteCommand cmd = new SQLiteCommand(query, _Connection))
                 {
-                    result = cmd.ExecuteScalar();
-                    success = true;
+                    result = cmd.ExecuteScalar(); 
                     return result;
                 }
             }
             finally
             {
-                if (Debug)
-                {
+                if (LogResults && Logger != null)
+                { 
                     if (result != null)
                     {
-                        Console.WriteLine("Scalar success: " + success + ", result: " + result.ToString() + ", query: " + query);
+                        Logger("[Sqlite] QueryScalar result: " + result.ToString());
+                    }
+                    else
+                    {
+                        Logger("[Sqlite] QueryScalar result: null");
                     }
                 }
             }
@@ -236,15 +256,15 @@ namespace SqliteWrapper
             {
                 cmd.ExecuteNonQuery();
             }
-            
+
             File.Copy(_Filename, destination, true);
-        
+
             using (SQLiteCommand cmd = new SQLiteCommand("ROLLBACK;", _Connection))
             {
                 cmd.ExecuteNonQuery();
             }
         }
-        
+
         /// <summary>
         /// Returns a DataTable containing at most one row with data from the specified table where the specified column contains the specified value.  Should only be used on key or unique fields.
         /// </summary>
@@ -350,7 +370,7 @@ namespace SqliteWrapper
                     outerQuery += "LIMIT " + maxResults;
                 }
             }
-                     
+
             result = Query(outerQuery);
             return result;
         }
@@ -405,7 +425,7 @@ namespace SqliteWrapper
                     if (curr.Value != null)
                     {
                         if (curr.Value is DateTime || curr.Value is DateTime?)
-                        { 
+                        {
                             values += ",'" + Timestamp((DateTime)curr.Value) + "'";
                         }
                         else
@@ -429,7 +449,7 @@ namespace SqliteWrapper
             #endregion
 
             #region Build-INSERT-Query-and-Submit
-             
+
             //
             // insert into
             //
@@ -438,7 +458,7 @@ namespace SqliteWrapper
             query += "VALUES ";
             query += "(" + values + "); ";
             query += "SELECT last_insert_rowid() AS id; ";
-            
+
             return QueryScalar(query);
 
             #endregion
@@ -495,7 +515,7 @@ namespace SqliteWrapper
                     if (curr.Value != null)
                     {
                         if (curr.Value is DateTime || curr.Value is DateTime?)
-                        { 
+                        {
                             keyValueClause += "," + curr.Key + "='" + Timestamp((DateTime)curr.Value) + "'";
                         }
                         else
@@ -521,7 +541,7 @@ namespace SqliteWrapper
             #endregion
 
             #region Build-UPDATE-Query-and-Submit
-             
+
             query += "UPDATE " + tableName + " SET ";
             query += keyValueClause + " ";
             if (filter != null) query += "WHERE " + filter.ToWhereClause() + " ";
@@ -546,10 +566,10 @@ namespace SqliteWrapper
             DataTable result;
 
             #region Build-DELETE-Query-and-Submit
-             
+
             query += "DELETE FROM " + tableName + " ";
             if (filter != null) query += "WHERE " + filter.ToWhereClause() + " ";
-                   
+
             result = Query(query);
 
             #endregion
@@ -566,7 +586,7 @@ namespace SqliteWrapper
         /// </summary>
         /// <param name="disposing">Disposing.</param>
         protected virtual void Dispose(bool disposing)
-        { 
+        {
             if (_Disposed)
             {
                 return;
@@ -591,7 +611,7 @@ namespace SqliteWrapper
             _Disposed = true;
 
             GC.Collect();
-            GC.WaitForPendingFinalizers();            
+            GC.WaitForPendingFinalizers();
         }
 
         private void CreateFile(string filename)
@@ -611,6 +631,13 @@ namespace SqliteWrapper
         {
             _Connection = new SQLiteConnection(_ConnectionString);
             _Connection.Open();
+        }
+
+        private void LogInternal(string msg)
+        {
+            if (String.IsNullOrEmpty(msg)) return;
+            if (!_EnableLogging) return;
+            Debug.WriteLine(msg);
         }
 
         #endregion

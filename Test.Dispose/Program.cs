@@ -12,13 +12,13 @@ namespace Test.Dispose
 {
     class Program
     {
-        static DatabaseClient _Database;
         static bool _RunForever = true;
+        static DatabaseClient _Database;
 
         static void Main(string[] args)
         {
             Console.WriteLine("Opening file");
-            _Database = new DatabaseClient("test", true);
+            _Database = new DatabaseClient("test");
 
             Console.WriteLine("Creating table 'company' with fields 'id' (int) and 'val' (string)...");
             string createTableQuery =
@@ -54,7 +54,7 @@ namespace Test.Dispose
                         break;
 
                     case "init":
-                        _Database = new DatabaseClient("test", true);
+                        _Database = new DatabaseClient("test");
                         break;
 
                     default:
