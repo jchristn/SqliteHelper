@@ -70,8 +70,7 @@ namespace SqliteWrapper
         public void Dispose()
         {
             Dispose(true);
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
+            GC.SuppressFinalize(this); 
         }
 
         /// <summary>
@@ -575,6 +574,248 @@ namespace SqliteWrapper
             #endregion
 
             return;
+        }
+
+        /// <summary>
+        /// List all tables in the database.
+        /// </summary>
+        /// <returns>List of strings, each being a table name.</returns>
+        public List<string> ListTables()
+        {
+            string query =
+                "SELECT " +
+                "    name AS TABLE_NAME " +
+                "FROM " +
+                "    sqlite_master " +
+                "WHERE " +
+                "    type ='table' AND " +
+                "    name NOT LIKE 'sqlite_%'; ";
+            
+            DataTable result = Query(query);
+            List<string> tableNames = new List<string>();
+
+            if (result != null && result.Rows.Count > 0)
+            { 
+                foreach (DataRow curr in result.Rows)
+                {
+                    tableNames.Add(curr["TABLE_NAME"].ToString());
+                } 
+            }
+
+            return tableNames;
+        }
+
+        /// <summary>
+        /// Check if a table exists in the database.
+        /// </summary>
+        /// <param name="tableName">The name of the table.</param>
+        /// <returns>True if exists.</returns>
+        public bool TableExists(string tableName)
+        {
+            if (String.IsNullOrEmpty(tableName)) throw new ArgumentNullException(nameof(tableName));
+
+            return ListTables().Contains(tableName);
+        }
+
+        /// <summary>
+        /// Show the columns and column metadata from a specific table.
+        /// </summary>
+        /// <param name="tableName">The table to view.</param>
+        /// <returns>A list of column objects.</returns>
+        public List<Column> DescribeTable(string tableName)
+        {
+            if (String.IsNullOrEmpty(tableName)) throw new ArgumentNullException(nameof(tableName));
+
+            string query =
+                "SELECT " +
+                "    m.name AS TABLE_NAME,  " +
+                "    p.cid AS COLUMN_ID, " +
+                "    p.name AS COLUMN_NAME, " +
+                "    p.type AS DATA_TYPE, " +
+                "    p.pk AS IS_PRIMARY_KEY, " + 
+                "    p.[notnull] AS IS_NOT_NULLABLE " +
+                "FROM sqlite_master m " +
+                "LEFT OUTER JOIN pragma_table_info((m.name)) p " +
+                "    ON m.name <> p.name " +
+                "WHERE m.type = 'table' " +
+                "    AND m.name = '" + SanitizeString(tableName) + "' " +
+                "ORDER BY TABLE_NAME, COLUMN_ID ";
+
+            DataTable result = Query(query);
+            List<Column> columns = new List<Column>();
+             
+            if (result != null && result.Rows.Count > 0)
+            {
+                foreach (DataRow currColumn in result.Rows)
+                {
+                    #region Process-Each-Column
+                     
+                    Column tempColumn = new Column(); 
+                    
+                    tempColumn.Name = currColumn["COLUMN_NAME"].ToString(); 
+                    tempColumn.Type = DataTypeFromString(currColumn["DATA_TYPE"].ToString());
+                    tempColumn.PrimaryKey = Convert.ToBoolean(currColumn["IS_PRIMARY_KEY"]);
+
+                    bool isNotNullable = Convert.ToBoolean(currColumn["IS_NOT_NULLABLE"]);
+                    tempColumn.Nullable = !isNotNullable;
+                     
+                    if (!columns.Exists(c => c.Name.Equals(tempColumn.Name)))
+                    {
+                        columns.Add(tempColumn);
+                    }
+
+                    #endregion
+                }
+            }
+
+            return columns;
+        }
+
+        /// <summary>
+        /// Describe each of the tables in the database.
+        /// </summary>
+        /// <returns>Dictionary.  Key is table name, value is List of Column objects.</returns>
+        public Dictionary<string, List<Column>> DescribeDatabase()
+        {
+            DataTable result = new DataTable();
+            Dictionary<string, List<Column>> ret = new Dictionary<string, List<Column>>();
+            List<string> tableNames = ListTables();
+
+            if (tableNames != null && tableNames.Count > 0)
+            {
+                foreach (string tableName in tableNames)
+                {
+                    ret.Add(tableName, DescribeTable(tableName));
+                }
+            }
+
+            return ret;
+        }
+
+        /// <summary>
+        /// Create a table with a specified name if it doesn't already exist.
+        /// </summary>
+        /// <param name="tableName">The name of the table.</param>
+        /// <param name="columns">Columns.</param>
+        public void CreateTable(string tableName, List<Column> columns)
+        {
+            if (String.IsNullOrEmpty(tableName)) throw new ArgumentNullException(nameof(tableName));
+            if (columns == null || columns.Count < 1) throw new ArgumentNullException(nameof(columns));
+
+            string query =
+                "CREATE TABLE IF NOT EXISTS '" + SanitizeString(tableName) + "' " +
+                "(";
+
+            int columnCount = 0;
+            foreach (Column curr in columns)
+            {
+                if (columnCount > 0) query += ",";
+
+                query += SanitizeString(curr.Name) + " " + curr.Type.ToString() + " ";
+
+                if (curr.PrimaryKey)
+                {
+                    query += "PRIMARY KEY ";
+                    if (curr.Type == DataType.Integer) query += "AUTOINCREMENT ";
+                }
+
+                if (!curr.Nullable) query += "NOT NULL ";
+
+                columnCount++;
+            }
+
+            query += 
+                ")";
+
+            DataTable result = Query(query);
+        }
+
+        /// <summary>
+        /// Drop the specified table if it exists.  
+        /// </summary>
+        /// <param name="tableName">The table to drop.</param>
+        public void DropTable(string tableName)
+        {
+            if (String.IsNullOrEmpty(tableName)) throw new ArgumentNullException(nameof(tableName));
+
+            string query = "DROP TABLE IF EXISTS '" + SanitizeString(tableName) + "'";
+            DataTable result = Query(query);
+        }
+
+        /// <summary>
+        /// Retrieve the name of the primary key column from a specific table.
+        /// </summary>
+        /// <param name="tableName">The table of which you want the primary key.</param>
+        /// <returns>A string containing the column name.</returns>
+        public string GetPrimaryKeyColumn(string tableName)
+        {
+            if (String.IsNullOrEmpty(tableName)) throw new ArgumentNullException(nameof(tableName));
+
+            List<Column> details = DescribeTable(tableName);
+            if (details != null && details.Count > 0)
+            {
+                foreach (Column c in details)
+                {
+                    if (c.PrimaryKey) return c.Name;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Retrieve a list of the names of columns from within a specific table.
+        /// </summary>
+        /// <param name="tableName">The table of which ou want to retrieve the list of columns.</param>
+        /// <returns>A list of strings containing the column names.</returns>
+        public List<string> GetColumnNames(string tableName)
+        {
+            if (String.IsNullOrEmpty(tableName)) throw new ArgumentNullException(nameof(tableName));
+
+            List<Column> details = DescribeTable(tableName);
+            List<string> columnNames = new List<string>();
+
+            if (details != null && details.Count > 0)
+            {
+                foreach (Column c in details)
+                {
+                    columnNames.Add(c.Name);
+                }
+            }
+
+            return columnNames;
+        }
+
+        /// <summary>
+        /// Retrieve a DataType based on a supplied string.
+        /// Refer to https://www.sqlite.org/datatype3.html.
+        /// </summary>
+        /// <param name="s">String.</param>
+        /// <returns>DataType.</returns>
+        public DataType DataTypeFromString(string s)
+        {
+            if (String.IsNullOrEmpty(s)) throw new ArgumentNullException(nameof(s));
+
+            s = s.ToLower();
+
+            if (s.Contains("int")) return DataType.Integer;
+
+            if (s.Contains("char")
+                || s.Contains("text")
+                || s.Contains("clob")) return DataType.Text;
+
+            if (s.Contains("blob")) return DataType.Blob;
+
+            if (s.Contains("real")
+                || s.Contains("double")
+                || s.Contains("float")) return DataType.Real;
+
+            if (s.Contains("numeric") ||
+                s.Contains("decimal") ||
+                s.Contains("bool") ||
+                s.Contains("date")) return DataType.Numeric; 
+
+            throw new ArgumentException("Unknown DataType: " + s);
         }
 
         #endregion

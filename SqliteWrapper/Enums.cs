@@ -68,4 +68,35 @@ namespace SqliteWrapper
         /// </summary>
         IsNotNull
     }
+
+    /// <summary>
+    /// Type of data contained in the column.  Refer to https://www.sqlite.org/datatype3.html.
+    /// </summary>
+    public enum DataType
+    {
+        /// <summary>
+        /// Integer.
+        /// </summary>
+        Integer,
+        /// <summary>
+        /// Text.
+        /// </summary>
+        Text,
+        /// <summary>
+        /// Blob.
+        /// </summary>
+        Blob,
+        /// <summary>
+        /// Real.
+        /// </summary>
+        Real,
+        /// <summary>
+        /// Numeric.
+        /// </summary>
+        Numeric,
+        /// <summary>
+        /// Null.
+        /// </summary>
+        Null
+    }
 }

@@ -2,11 +2,15 @@
 
 ## Current Version
 
+v1.1.2
+
+- Added table management capabilities (create, drop, describe)
+
+## Previous Versions
+
 v1.1.0
 
 - Breaking changes; improved logging configuration
-
-## Previous Versions
 
 v1.0.15
 
