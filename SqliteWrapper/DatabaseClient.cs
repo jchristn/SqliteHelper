@@ -36,8 +36,7 @@ namespace SqliteWrapper
 
         #region Private-Members
 
-        private bool _Disposed = false;
-        private bool _EnableLogging = false; 
+        private bool _Disposed = false; 
         private string _Filename;
         private string _ConnectionString;
         private SQLiteConnection _Connection;
@@ -72,13 +71,13 @@ namespace SqliteWrapper
             Dispose(true);
             GC.SuppressFinalize(this); 
         }
-
+         
         /// <summary>
         /// Use to sanitize values you wish to INSERT.
         /// </summary>
         /// <param name="s">Value to be sanitized.</param>
         /// <returns>Sanitized string.</returns>
-        public static string SanitizeString(string s)
+        public string SanitizeString(string s)
         {
             if (String.IsNullOrEmpty(s)) return String.Empty;
 
@@ -873,14 +872,7 @@ namespace SqliteWrapper
             _Connection = new SQLiteConnection(_ConnectionString);
             _Connection.Open();
         }
-
-        private void LogInternal(string msg)
-        {
-            if (String.IsNullOrEmpty(msg)) return;
-            if (!_EnableLogging) return;
-            Debug.WriteLine(msg);
-        }
-
+         
         #endregion
     }
 }

@@ -2,11 +2,15 @@
 
 ## Current Version
 
+v1.1.4
+
+- SanitizeString is now an instance method.
+
+## Previous Versions
+
 v1.1.2
 
 - Added table management capabilities (create, drop, describe)
-
-## Previous Versions
 
 v1.1.0
 

@@ -27,9 +27,9 @@ This is particularly helpful if you are experiencing the exception ```System.Dll
 
 Please contact me for any issues or enhancement requests!  I'm at joel dot christner at gmail dot com.  
 
-## New in v1.1.2
+## New in v1.1.4
 
-- Added table management capabilities (create, drop, describe)
+- SanitizeString is now an instance method.
 
 ## A Note on Sanitization
 
