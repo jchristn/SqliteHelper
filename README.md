@@ -1,6 +1,6 @@
-![alt tag](https://raw.githubusercontent.com/jchristn/SqliteWrapper/master/assets/icon.ico)
+![alt tag](https://raw.githubusercontent.com/jchristn/SqliteHelper/master/assets/icon.ico)
 
-# SqliteWrapper
+# SqliteHelper
 
 [![NuGet Version](https://img.shields.io/nuget/v/SqliteHelper.svg?style=flat)](https://www.nuget.org/packages/SqliteHelper/) [![NuGet](https://img.shields.io/nuget/dt/SqliteHelper.svg)](https://www.nuget.org/packages/SqliteHelper) 
 
@@ -8,7 +8,7 @@ Simple database wrapper for Sqlite written in C#.
 
 ## Description
 
-SqliteWrapper is a simple database wrapper for Sqlite databases written in C#.   
+SqliteHelper is a simple database wrapper for Sqlite databases written in C#.   
 
 Core features:
 - dynamic query building using expression objects
