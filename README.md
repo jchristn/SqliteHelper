@@ -1,3 +1,5 @@
+![alt tag](https://raw.githubusercontent.com/jchristn/SqliteWrapper/master/assets/icon.ico)
+
 # SqliteWrapper
 
 [![NuGet Version](https://img.shields.io/nuget/v/SqliteHelper.svg?style=flat)](https://www.nuget.org/packages/SqliteHelper/) [![NuGet](https://img.shields.io/nuget/dt/SqliteHelper.svg)](https://www.nuget.org/packages/SqliteHelper) 
