@@ -8,27 +8,27 @@
     <Authors>Joel Christner</Authors>
     <Product>SqliteHelper</Product>
     <Description>Simple wrapper for Sqlite databases written in C#.</Description>
-    <Copyright>(c)2019 Joel Christner</Copyright>
-    <PackageProjectUrl>https://github.com/jchristn/SqliteWrapper</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/jchristn/SqliteWrapper</RepositoryUrl>
+    <Copyright>(c)2020 Joel Christner</Copyright>
+    <PackageProjectUrl>https://github.com/jchristn/sqlitehelper</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/jchristn/sqlitehelper</RepositoryUrl>
     <PackageLicenseUrl></PackageLicenseUrl>
     <RepositoryType>Github</RepositoryType>
     <PackageTags>sqlite database wrapper dbms</PackageTags>
     <PackageReleaseNotes>SanitizeString is now an instance method.</PackageReleaseNotes>
     <AssemblyVersion>1.1.4.0</AssemblyVersion>
     <FileVersion>1.1.4.0</FileVersion>
-    <PackageIconUrl>https://raw.githubusercontent.com/jchristn/sqlitewrapper/master/assets/icon.ico</PackageIconUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/jchristn/sqlitehelper/master/assets/icon.ico</PackageIconUrl>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
     <CodeAnalysisRuleSet />
-    <DocumentationFile>C:\code\misc\sqlitewrapper\SqliteWrapper\SqliteWrapper.xml</DocumentationFile>
+    <DocumentationFile>C:\code\misc\sqlitehelper\sqlitehelper\sqlitehelper.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
     <CodeAnalysisRuleSet />
-    <DocumentationFile>C:\Code\Misc\SqliteWrapper\SqliteWrapper\SqliteWrapper.xml</DocumentationFile>
+    <DocumentationFile>C:\Code\Misc\sqlitehelper\sqlitehelper\sqlitehelper.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

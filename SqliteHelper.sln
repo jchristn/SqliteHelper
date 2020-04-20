@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29411.108
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SqliteWrapper", "SqliteWrapper\SqliteWrapper.csproj", "{3F7E3E1E-3C40-4046-904C-4DF99BCBB985}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SqliteHelper", "SqliteHelper\SqliteHelper.csproj", "{3F7E3E1E-3C40-4046-904C-4DF99BCBB985}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", "{3C09277E-5669-443C-96F9-E50A2D9AB1E4}"
 EndProject

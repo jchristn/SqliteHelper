@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SqliteWrapper
+namespace SqliteHelper
 {
     internal static class Helper
     { 

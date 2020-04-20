@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SqliteWrapper\SqliteWrapper.csproj" />
+    <ProjectReference Include="..\SqliteHelper\SqliteHelper.csproj" />
   </ItemGroup>
 
 </Project>

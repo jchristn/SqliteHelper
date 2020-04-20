@@ -1,66 +1,66 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>SqliteWrapper</name>
+        <name>SqliteHelper</name>
     </assembly>
     <members>
-        <member name="T:SqliteWrapper.DatabaseClient">
+        <member name="T:SqliteHelper.DatabaseClient">
             <summary>
             Lightweight wrapper for Sqlite.
             </summary>
         </member>
-        <member name="F:SqliteWrapper.DatabaseClient.Debug">
+        <member name="F:SqliteHelper.DatabaseClient.Debug">
             <summary>
             Enable or disable console debugging.
             </summary>
         </member>
-        <member name="M:SqliteWrapper.DatabaseClient.#ctor(System.String,System.Boolean)">
+        <member name="M:SqliteHelper.DatabaseClient.#ctor(System.String,System.Boolean)">
             <summary>
             Initialize Sqlite client using a new file or existing file.
             </summary>
             <param name="filename">The filename.</param>
             <param name="debug">Enable or disable console logging.</param>
         </member>
-        <member name="M:SqliteWrapper.DatabaseClient.Dispose">
+        <member name="M:SqliteHelper.DatabaseClient.Dispose">
             <summary>
             Tear down the database client and dispose of resources.
             </summary>
         </member>
-        <member name="M:SqliteWrapper.DatabaseClient.SanitizeString(System.String)">
+        <member name="M:SqliteHelper.DatabaseClient.SanitizeString(System.String)">
             <summary>
             Use to sanitize values you wish to INSERT.
             </summary>
             <param name="s">Value to be sanitized.</param>
             <returns>Sanitized string.</returns>
         </member>
-        <member name="M:SqliteWrapper.DatabaseClient.Timestamp(System.DateTime)">
+        <member name="M:SqliteHelper.DatabaseClient.Timestamp(System.DateTime)">
             <summary>
             Create a string timestamp from the given DateTime for the database of the instance type.
             </summary>
             <param name="ts">DateTime.</param>
             <returns>A string with timestamp formatted for the database of the instance type.</returns>
         </member>
-        <member name="M:SqliteWrapper.DatabaseClient.Query(System.String)">
+        <member name="M:SqliteHelper.DatabaseClient.Query(System.String)">
             <summary>
             Execute a SQL query.
             </summary>
             <param name="query">The query.</param>
             <returns>DataTable containing the query result.</returns>
         </member>
-        <member name="M:SqliteWrapper.DatabaseClient.QueryScalar(System.String)">
+        <member name="M:SqliteHelper.DatabaseClient.QueryScalar(System.String)">
             <summary>
             Execute a scalar SQL query (generally multiple statements in a single query).
             </summary>
             <param name="query">The query.</param>
             <returns>Object containing result from the query.</returns>
         </member>
-        <member name="M:SqliteWrapper.DatabaseClient.Backup(System.String)">
+        <member name="M:SqliteHelper.DatabaseClient.Backup(System.String)">
             <summary>
             Copies the database to another file.
             </summary>
             <param name="destination">The destination file.</param>
         </member>
-        <member name="M:SqliteWrapper.DatabaseClient.GetUniqueObjectById(System.String,System.String,System.Object)">
+        <member name="M:SqliteHelper.DatabaseClient.GetUniqueObjectById(System.String,System.String,System.Object)">
             <summary>
             Returns a DataTable containing at most one row with data from the specified table where the specified column contains the specified value.  Should only be used on key or unique fields.
             </summary>
@@ -69,7 +69,7 @@
             <param name="value">The value to match in the key or unique field column.  This should be an object that can be cast to a string value.</param>
             <returns>A DataTable containing at most one row.</returns>
         </member>
-        <member name="M:SqliteWrapper.DatabaseClient.Select(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Collections.Generic.List{System.String},SqliteWrapper.Expression,System.String)">
+        <member name="M:SqliteHelper.DatabaseClient.Select(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Collections.Generic.List{System.String},SqliteHelper.Expression,System.String)">
             <summary>
             Execute a SELECT query.
             </summary>
@@ -81,7 +81,7 @@
             <param name="orderByClause">Specify an ORDER BY clause if desired.</param>
             <returns>A DataTable containing the results.</returns>
         </member>
-        <member name="M:SqliteWrapper.DatabaseClient.Insert(System.String,System.Collections.Generic.Dictionary{System.String,System.Object})">
+        <member name="M:SqliteHelper.DatabaseClient.Insert(System.String,System.Collections.Generic.Dictionary{System.String,System.Object})">
             <summary>
             Execute an INSERT query.
             </summary>
@@ -89,7 +89,7 @@
             <param name="keyValuePairs">The key-value pairs for the row you wish to INSERT.</param>
             <returns>Object containing last inserted row ID; generally should be cast to an integer.</returns>
         </member>
-        <member name="M:SqliteWrapper.DatabaseClient.Update(System.String,System.Collections.Generic.Dictionary{System.String,System.Object},SqliteWrapper.Expression)">
+        <member name="M:SqliteHelper.DatabaseClient.Update(System.String,System.Collections.Generic.Dictionary{System.String,System.Object},SqliteHelper.Expression)">
             <summary>
             Execute an UPDATE query.
             </summary>
@@ -97,105 +97,105 @@
             <param name="keyValuePairs">The key-value pairs for the data you wish to UPDATE.</param>
             <param name="filter">The expression containing the UPDATE filter (i.e. WHERE clause data).</param>
         </member>
-        <member name="M:SqliteWrapper.DatabaseClient.Delete(System.String,SqliteWrapper.Expression)">
+        <member name="M:SqliteHelper.DatabaseClient.Delete(System.String,SqliteHelper.Expression)">
             <summary>
             Execute a DELETE query.
             </summary>
             <param name="tableName">The table in which you wish to DELETE.</param>
             <param name="filter">The expression containing the DELETE filter (i.e. WHERE clause data).</param>
         </member>
-        <member name="M:SqliteWrapper.DatabaseClient.Dispose(System.Boolean)">
+        <member name="M:SqliteHelper.DatabaseClient.Dispose(System.Boolean)">
             <summary>
             Dispose of resources.
             </summary>
             <param name="disposing">Disposing.</param>
         </member>
-        <member name="T:SqliteWrapper.Operators">
+        <member name="T:SqliteHelper.Operators">
             <summary>
             Enumeration containing the supported WHERE clause operators.
             </summary>
         </member>
-        <member name="F:SqliteWrapper.Operators.And">
+        <member name="F:SqliteHelper.Operators.And">
             <summary>
             Boolean AND.
             </summary>
         </member>
-        <member name="F:SqliteWrapper.Operators.Or">
+        <member name="F:SqliteHelper.Operators.Or">
             <summary>
             Boolean OR.
             </summary>
         </member>
-        <member name="F:SqliteWrapper.Operators.Equals">
+        <member name="F:SqliteHelper.Operators.Equals">
             <summary>
             The two values are equal to one another.
             </summary>
         </member>
-        <member name="F:SqliteWrapper.Operators.NotEquals">
+        <member name="F:SqliteHelper.Operators.NotEquals">
             <summary>
             The two values are not equal to one another.
             </summary>
         </member>
-        <member name="F:SqliteWrapper.Operators.In">
+        <member name="F:SqliteHelper.Operators.In">
             <summary>
             The left value is contained within the right value (list).
             </summary>
         </member>
-        <member name="F:SqliteWrapper.Operators.NotIn">
+        <member name="F:SqliteHelper.Operators.NotIn">
             <summary>
             The left value is not contained within the right value (list).
             </summary>
         </member>
-        <member name="F:SqliteWrapper.Operators.Contains">
+        <member name="F:SqliteHelper.Operators.Contains">
             <summary>
             The left value contains the right value.
             </summary>
         </member>
-        <member name="F:SqliteWrapper.Operators.ContainsNot">
+        <member name="F:SqliteHelper.Operators.ContainsNot">
             <summary>
             The left value does not contain the right value.
             </summary>
         </member>
-        <member name="F:SqliteWrapper.Operators.GreaterThan">
+        <member name="F:SqliteHelper.Operators.GreaterThan">
             <summary>
             The left value is greater than the right value.
             </summary>
         </member>
-        <member name="F:SqliteWrapper.Operators.GreaterThanOrEqualTo">
+        <member name="F:SqliteHelper.Operators.GreaterThanOrEqualTo">
             <summary>
             The left value is greater than or equal to the right value.
             </summary>
         </member>
-        <member name="F:SqliteWrapper.Operators.LessThan">
+        <member name="F:SqliteHelper.Operators.LessThan">
             <summary>
             The left value is less than the right value.
             </summary>
         </member>
-        <member name="F:SqliteWrapper.Operators.LessThanOrEqualTo">
+        <member name="F:SqliteHelper.Operators.LessThanOrEqualTo">
             <summary>
             The left value is less than or equal to the right value.
             </summary>
         </member>
-        <member name="F:SqliteWrapper.Operators.IsNull">
+        <member name="F:SqliteHelper.Operators.IsNull">
             <summary>
             The left value is null.
             </summary>
         </member>
-        <member name="F:SqliteWrapper.Operators.IsNotNull">
+        <member name="F:SqliteHelper.Operators.IsNotNull">
             <summary>
             The left value is not null.
             </summary>
         </member>
-        <member name="T:SqliteWrapper.Expression">
+        <member name="T:SqliteHelper.Expression">
             <summary>
             Expression, used to build the WHERE clause in a query.
             </summary>
         </member>
-        <member name="M:SqliteWrapper.Expression.#ctor">
+        <member name="M:SqliteHelper.Expression.#ctor">
             <summary>
             A structure in the form of term-operator-term that defines a boolean operation within a WHERE clause.
             </summary>
         </member>
-        <member name="M:SqliteWrapper.Expression.#ctor(System.Object,SqliteWrapper.Operators,System.Object)">
+        <member name="M:SqliteHelper.Expression.#ctor(System.Object,SqliteHelper.Operators,System.Object)">
             <summary>
             A structure in the form of term-operator-term that defines a boolean operation within a WHERE clause.
             </summary>
@@ -203,34 +203,34 @@
             <param name="oper">The operator.</param>
             <param name="right">The right term of the expression; can either be an object for comparison or a nested Expression.</param>
         </member>
-        <member name="F:SqliteWrapper.Expression.LeftTerm">
+        <member name="F:SqliteHelper.Expression.LeftTerm">
             <summary>
             The left term of the expression; can either be a string term or a nested Expression.
             </summary>
         </member>
-        <member name="F:SqliteWrapper.Expression.Operator">
+        <member name="F:SqliteHelper.Expression.Operator">
             <summary>
             The boolean operator.
             </summary>
         </member>
-        <member name="F:SqliteWrapper.Expression.RightTerm">
+        <member name="F:SqliteHelper.Expression.RightTerm">
             <summary>
             The right term of the expression; can either be an object for comparison or a nested Expression.
             </summary>
         </member>
-        <member name="M:SqliteWrapper.Expression.ToWhereClause">
+        <member name="M:SqliteHelper.Expression.ToWhereClause">
             <summary>
             Converts an Expression to a string that is compatible for use in a WHERE clause.
             </summary>
             <returns>String containing human-readable version of the Expression.</returns>
         </member>
-        <member name="M:SqliteWrapper.Expression.ToString">
+        <member name="M:SqliteHelper.Expression.ToString">
             <summary>
             Display Expression in a human-readable string.
             </summary>
             <returns>String containing human-readable version of the Expression.</returns>
         </member>
-        <member name="M:SqliteWrapper.Expression.PrependAndClause(SqliteWrapper.Expression,SqliteWrapper.Expression)">
+        <member name="M:SqliteHelper.Expression.PrependAndClause(SqliteHelper.Expression,SqliteHelper.Expression)">
             <summary>
             Prepends the Expression in prepend to the Expression original using an AND clause.
             </summary>
@@ -238,7 +238,7 @@
             <param name="original">The original Expression.</param>
             <returns>A new Expression.</returns>
         </member>
-        <member name="M:SqliteWrapper.Expression.PrependOrClause(SqliteWrapper.Expression,SqliteWrapper.Expression)">
+        <member name="M:SqliteHelper.Expression.PrependOrClause(SqliteHelper.Expression,SqliteHelper.Expression)">
             <summary>
             Prepends the Expression in prepend to the Expression original using an OR clause.
             </summary>
@@ -246,21 +246,21 @@
             <param name="original">The original Expression.</param>
             <returns>A new Expression.</returns>
         </member>
-        <member name="M:SqliteWrapper.Expression.ListToNestedAndExpression(System.Collections.Generic.List{SqliteWrapper.Expression})">
+        <member name="M:SqliteHelper.Expression.ListToNestedAndExpression(System.Collections.Generic.List{SqliteHelper.Expression})">
             <summary>
             Convert a List of Expression objects to a nested Expression containing AND between each Expression in the list. 
             </summary>
             <param name="exprList">List of Expression objects.</param>
             <returns>A nested Expression.</returns>
         </member>
-        <member name="M:SqliteWrapper.Expression.ListToNestedOrExpression(System.Collections.Generic.List{SqliteWrapper.Expression})">
+        <member name="M:SqliteHelper.Expression.ListToNestedOrExpression(System.Collections.Generic.List{SqliteHelper.Expression})">
             <summary>
             Convert a List of Expression objects to a nested Expression containing OR between each Expression in the list. 
             </summary>
             <param name="exprList">List of Expression objects.</param>
             <returns>A nested Expression.</returns>
         </member>
-        <member name="M:SqliteWrapper.Expression.PrependAnd(System.Object,SqliteWrapper.Operators,System.Object)">
+        <member name="M:SqliteHelper.Expression.PrependAnd(System.Object,SqliteHelper.Operators,System.Object)">
             <summary>
             Prepends a new Expression using the supplied left term, operator, and right term using an AND clause.
             </summary>
@@ -268,13 +268,13 @@
             <param name="oper">The operator.</param>
             <param name="right">The right term of the expression; can either be an object for comparison or a nested Expression.</param>
         </member>
-        <member name="M:SqliteWrapper.Expression.PrependAnd(SqliteWrapper.Expression)">
+        <member name="M:SqliteHelper.Expression.PrependAnd(SqliteHelper.Expression)">
             <summary>
             Prepends the Expression with the supplied Expression using an AND clause.
             </summary>
             <param name="prepend">The Expression to prepend.</param> 
         </member>
-        <member name="M:SqliteWrapper.Expression.PrependOr(System.Object,SqliteWrapper.Operators,System.Object)">
+        <member name="M:SqliteHelper.Expression.PrependOr(System.Object,SqliteHelper.Operators,System.Object)">
             <summary>
             Prepends a new Expression using the supplied left term, operator, and right term using an OR clause.
             </summary>
@@ -282,7 +282,7 @@
             <param name="oper">The operator.</param>
             <param name="right">The right term of the expression; can either be an object for comparison or a nested Expression.</param>
         </member>
-        <member name="M:SqliteWrapper.Expression.PrependOr(SqliteWrapper.Expression)">
+        <member name="M:SqliteHelper.Expression.PrependOr(SqliteHelper.Expression)">
             <summary>
             Prepends the Expression with the supplied Expression using an OR clause.
             </summary>

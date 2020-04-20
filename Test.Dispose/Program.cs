@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Dynamic;
-using System.IO;
-
-using Newtonsoft.Json;
-
-using SqliteWrapper;
+using System.IO; 
+using Newtonsoft.Json; 
+using SqliteHelper;
 
 namespace Test.Dispose
 {
