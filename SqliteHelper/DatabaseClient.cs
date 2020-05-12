@@ -708,9 +708,10 @@ namespace SqliteHelper
             int columnCount = 0;
             foreach (Column curr in columns)
             {
-                if (columnCount > 0) query += ",";
+                if (columnCount > 0) query += ", ";
 
-                query += SanitizeString(curr.Name) + " " + curr.Type.ToString() + " ";
+                query += SanitizeString(curr.Name) + " " + curr.Type.ToString() + " "; 
+                if (curr.Type == DataType.Text) query += "COLLATE NOCASE ";
 
                 if (curr.PrimaryKey)
                 {

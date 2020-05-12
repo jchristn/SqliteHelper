@@ -2,11 +2,15 @@
 
 ## Current Version
 
+v1.1.5
+
+- Added COLLATE NOCASE to the creation of TEXT columns during CreateTable operations
+
+## Previous Versions
+
 v1.1.4
 
 - SanitizeString is now an instance method.
-
-## Previous Versions
 
 v1.1.2
 

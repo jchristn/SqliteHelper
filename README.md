@@ -26,9 +26,9 @@ This is particularly helpful if you are experiencing the exception ```System.Dll
 
 Please contact me for any issues or enhancement requests!  I'm at joel dot christner at gmail dot com.  
 
-## New in v1.1.4
+## New in v1.1.5
 
-- SanitizeString is now an instance method.
+- Added COLLATE NOCASE to the creation of TEXT columns during CreateTable operations
 
 ## A Note on Sanitization
 
