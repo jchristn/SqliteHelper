@@ -2,11 +2,15 @@
 
 ## Current Version
 
+v1.1.7
+
+- Added 'Between' operator and dependency update
+
+## Previous Versions
+
 v1.1.5
 
 - Added COLLATE NOCASE to the creation of TEXT columns during CreateTable operations
-
-## Previous Versions
 
 v1.1.4
 

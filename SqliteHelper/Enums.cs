@@ -60,6 +60,10 @@ namespace SqliteHelper
         /// </summary>
         LessThanOrEqualTo,
         /// <summary>
+        /// The left value is between two values supplied in the right value.
+        /// </summary>
+        Between,
+        /// <summary>
         /// The left value is null.
         /// </summary>
         IsNull,

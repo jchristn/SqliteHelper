@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -23,7 +24,7 @@ namespace SqliteHelper
         }
 
         /// <summary>
-        /// A structure in the form of term-operator-term that defines a boolean operation within a WHERE clause.
+        /// A structure in the form of term-operator-term that defines a Boolean evaluation within a WHERE clause.
         /// </summary>
         /// <param name="left">The left term of the expression; can either be a string term or a nested Expression.</param>
         /// <param name="oper">The operator.</param>
@@ -33,6 +34,26 @@ namespace SqliteHelper
             LeftTerm = left;
             Operator = oper;
             RightTerm = right;
+        }
+
+        /// <summary>
+        /// A structure in the form of term-operator-term that defines a Boolean evaluation within a WHERE clause.
+        /// This constructor supports only the 'Between' operator.
+        /// </summary>
+        /// <param name="left">The left term of the expression; can either be a string term or a nested Expression.</param>
+        /// <param name="oper">Must be 'Between'.</param>
+        /// <param name="right">List of two values where the first value is the lower value and the second value is the higher value.</param>
+        public Expression(object left, Operators oper, List<object> right)
+        {
+            if (right == null) throw new ArgumentNullException(nameof(right));
+            if (right.Count != 2) throw new ArgumentException("Right term must contain exactly two members.");
+            if (oper != Operators.Between) throw new InvalidEnumArgumentException("Multiple values can only be used when the Operator is set to 'Between'.");
+            Expression startOfBetween = new Expression(left, Operators.GreaterThanOrEqualTo, right.First());
+            Expression endOfBetween = new Expression(left, Operators.LessThanOrEqualTo, right.Last());
+            Expression e = PrependAndClause(startOfBetween, endOfBetween);
+            LeftTerm = e.LeftTerm;
+            Operator = e.Operator;
+            RightTerm = e.RightTerm;
         }
 
         #endregion
