@@ -4,19 +4,19 @@
     <TargetFrameworks>netstandard2.0;net452</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>SqliteHelper</PackageId>
-    <Version>1.1.7</Version>
+    <Version>1.1.7.1</Version>
     <Authors>Joel Christner</Authors>
     <Product>SqliteHelper</Product>
-    <Description>Simple wrapper for Sqlite databases written in C#.</Description>
+    <Description>Deprecated; please use DatabaseWrapper.Sqlite instead.  Simple wrapper for Sqlite databases written in C#.</Description>
     <Copyright>(c)2020 Joel Christner</Copyright>
     <PackageProjectUrl>https://github.com/jchristn/sqlitehelper</PackageProjectUrl>
     <RepositoryUrl>https://github.com/jchristn/sqlitehelper</RepositoryUrl>
     <PackageLicenseUrl></PackageLicenseUrl>
     <RepositoryType>Github</RepositoryType>
     <PackageTags>sqlite database wrapper dbms</PackageTags>
-    <PackageReleaseNotes>Added support for Between operator, dependency update</PackageReleaseNotes>
-    <AssemblyVersion>1.1.7.0</AssemblyVersion>
-    <FileVersion>1.1.7.0</FileVersion>
+    <PackageReleaseNotes>Deprecated; please use DatabaseWrapper.Sqlite instead.</PackageReleaseNotes>
+    <AssemblyVersion>1.1.7.1</AssemblyVersion>
+    <FileVersion>1.1.7.1</FileVersion>
     <PackageIconUrl>https://raw.githubusercontent.com/jchristn/sqlitehelper/master/assets/icon.ico</PackageIconUrl>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
   </PropertyGroup>
