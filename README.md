@@ -1,3 +1,9 @@
+# DEPRECATED
+
+Deprecated as of 6/3/2020, version 1.1.7.
+
+Please consider using ```DatabaseWrapper.Sqlite``` instead, as it provides a superset of the functionality provided by SqliteHelper: https://github.com/jchristn/databasewrapper
+
 ![alt tag](https://raw.githubusercontent.com/jchristn/SqliteHelper/master/assets/icon.ico)
 
 # SqliteHelper
