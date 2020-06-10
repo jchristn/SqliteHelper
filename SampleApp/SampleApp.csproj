@@ -2,18 +2,13 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>netcoreapp2.0;net452</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.0</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netcoreapp2.0|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="System.Data.SQLite" Version="1.0.113.1" />
-    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.113.1" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SqliteHelper\SqliteHelper.csproj" />

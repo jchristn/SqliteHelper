@@ -2,11 +2,15 @@
 
 ## Current Version
 
+v1.2.0
+
+- Migrate to Microsoft.Data.Sqlite
+
+## Previous Versions
+
 v1.1.7
 
 - Added 'Between' operator and dependency update
-
-## Previous Versions
 
 v1.1.5
 

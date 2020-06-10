@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SQLite;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Data.Sqlite;
 
 namespace SqliteHelper
 {
@@ -36,10 +36,11 @@ namespace SqliteHelper
 
         #region Private-Members
 
-        private bool _Disposed = false; 
-        private string _Filename;
-        private string _ConnectionString;
-        private SQLiteConnection _Connection;
+        private bool _Disposed = false;
+        private string _Filename = null;
+        private string _ConnectionString = null;
+        private SqliteConnection _Connection = null;
+        private readonly object _Lock = new object();
 
         #endregion
 
@@ -53,10 +54,11 @@ namespace SqliteHelper
         {
             if (String.IsNullOrEmpty(filename)) throw new ArgumentNullException(nameof(filename));
 
-            _Filename = filename;
-             
-            BuildConnectionString();
-            Connect();
+            _Filename = filename; 
+            _ConnectionString = "Data Source=" + _Filename;
+
+            _Connection = new SqliteConnection(_ConnectionString);
+            _Connection.Open();
         }
 
         #endregion
@@ -180,9 +182,11 @@ namespace SqliteHelper
 
             try
             {
-                using (SQLiteCommand cmd = new SQLiteCommand(query, _Connection))
+#pragma warning disable CA2100 // Review SQL queries for security vulnerabilities
+                using (SqliteCommand cmd = new SqliteCommand(query, _Connection))
+#pragma warning restore CA2100 // Review SQL queries for security vulnerabilities
                 {
-                    using (SQLiteDataReader rdr = cmd.ExecuteReader())
+                    using (SqliteDataReader rdr = cmd.ExecuteReader())
                     {
                         result.Load(rdr);
                         return result;
@@ -220,7 +224,9 @@ namespace SqliteHelper
             {
                 if (String.IsNullOrEmpty(query)) return false;
 
-                using (SQLiteCommand cmd = new SQLiteCommand(query, _Connection))
+#pragma warning disable CA2100 // Review SQL queries for security vulnerabilities
+                using (SqliteCommand cmd = new SqliteCommand(query, _Connection))
+#pragma warning restore CA2100 // Review SQL queries for security vulnerabilities
                 {
                     result = cmd.ExecuteScalar(); 
                     return result;
@@ -250,14 +256,14 @@ namespace SqliteHelper
         {
             if (String.IsNullOrEmpty(destination)) throw new ArgumentNullException(nameof(destination));
 
-            using (SQLiteCommand cmd = new SQLiteCommand("BEGIN IMMEDIATE;", _Connection))
+            using (SqliteCommand cmd = new SqliteCommand("BEGIN IMMEDIATE;", _Connection))
             {
                 cmd.ExecuteNonQuery();
             }
 
             File.Copy(_Filename, destination, true);
 
-            using (SQLiteCommand cmd = new SQLiteCommand("ROLLBACK;", _Connection))
+            using (SqliteCommand cmd = new SqliteCommand("ROLLBACK;", _Connection))
             {
                 cmd.ExecuteNonQuery();
             }
@@ -582,15 +588,24 @@ namespace SqliteHelper
         public List<string> ListTables()
         {
             string query =
-                "SELECT " +
+                "DROP TABLE IF EXISTS tablelist; " +
+                "CREATE TEMPORARY TABLE tablelist AS " +
+                "  SELECT " +
                 "    name AS TABLE_NAME " +
-                "FROM " +
+                "  FROM " +
                 "    sqlite_master " +
-                "WHERE " +
+                "  WHERE " +
                 "    type ='table' AND " +
-                "    name NOT LIKE 'sqlite_%'; ";
-            
-            DataTable result = Query(query);
+                "    name NOT LIKE 'sqlite_%'; " +
+                "SELECT * FROM tablelist;";
+
+            DataTable result = null;
+
+            lock (_Lock)
+            {
+                result = Query(query);
+            }
+
             List<string> tableNames = new List<string>();
 
             if (result != null && result.Rows.Count > 0)
@@ -626,21 +641,29 @@ namespace SqliteHelper
             if (String.IsNullOrEmpty(tableName)) throw new ArgumentNullException(nameof(tableName));
 
             string query =
-                "SELECT " +
-                "    m.name AS TABLE_NAME,  " +
-                "    p.cid AS COLUMN_ID, " +
+                "DROP TABLE IF EXISTS tableinfo; " +
+                "CREATE TEMPORARY TABLE tableinfo AS " +
+                "  SELECT " +
+                "    m.name AS TABLE_NAME,  " + 
                 "    p.name AS COLUMN_NAME, " +
                 "    p.type AS DATA_TYPE, " +
-                "    p.pk AS IS_PRIMARY_KEY, " + 
+                "    p.pk AS IS_PRIMARY_KEY, " +
                 "    p.[notnull] AS IS_NOT_NULLABLE " +
-                "FROM sqlite_master m " +
-                "LEFT OUTER JOIN pragma_table_info((m.name)) p " +
+                "  FROM sqlite_master m " +
+                "  LEFT OUTER JOIN pragma_table_info(m.name) p " +
                 "    ON m.name <> p.name " +
-                "WHERE m.type = 'table' " +
+                "  WHERE m.type = 'table' " +
                 "    AND m.name = '" + SanitizeString(tableName) + "' " +
-                "ORDER BY TABLE_NAME, COLUMN_ID ";
+                "  ORDER BY TABLE_NAME; " +
+                "SELECT * FROM tableinfo;";
 
-            DataTable result = Query(query);
+            DataTable result = null;
+
+            lock (_Lock)
+            {
+                result = Query(query);
+            }
+
             List<Column> columns = new List<Column>();
              
             if (result != null && result.Rows.Count > 0)
@@ -853,25 +876,6 @@ namespace SqliteHelper
 
             GC.Collect();
             GC.WaitForPendingFinalizers();
-        }
-
-        private void CreateFile(string filename)
-        {
-            if (!File.Exists(filename))
-            {
-                SQLiteConnection.CreateFile(filename);
-            }
-        }
-
-        private void BuildConnectionString()
-        {
-            _ConnectionString = "Data Source=" + _Filename + ";Version=3;Pooling=False";
-        }
-
-        private void Connect()
-        {
-            _Connection = new SQLiteConnection(_ConnectionString);
-            _Connection.Open();
         }
          
         #endregion

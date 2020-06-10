@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net452</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>SqliteHelper</PackageId>
-    <Version>1.1.7.1</Version>
+    <Version>1.2.0.0</Version>
     <Authors>Joel Christner</Authors>
     <Product>SqliteHelper</Product>
     <Description>Deprecated; please use DatabaseWrapper.Sqlite instead.  Simple wrapper for Sqlite databases written in C#.</Description>
@@ -14,9 +14,9 @@
     <PackageLicenseUrl></PackageLicenseUrl>
     <RepositoryType>Github</RepositoryType>
     <PackageTags>sqlite database wrapper dbms</PackageTags>
-    <PackageReleaseNotes>Deprecated; please use DatabaseWrapper.Sqlite instead.</PackageReleaseNotes>
-    <AssemblyVersion>1.1.7.1</AssemblyVersion>
-    <FileVersion>1.1.7.1</FileVersion>
+    <PackageReleaseNotes>Migrate to Microsoft.Data.Sqlite</PackageReleaseNotes>
+    <AssemblyVersion>1.2.0.0</AssemblyVersion>
+    <FileVersion>1.2.0.0</FileVersion>
     <PackageIconUrl>https://raw.githubusercontent.com/jchristn/sqlitehelper/master/assets/icon.ico</PackageIconUrl>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
   </PropertyGroup>
@@ -41,8 +41,12 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="System.Data.SQLite" Version="1.0.113.1" />
-    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.113.1" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="Microsoft.Data.Sqlite">
+      <Version>3.1.5</Version>
+    </PackageReference>
   </ItemGroup>
 
 </Project>

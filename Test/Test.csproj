@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>netcoreapp2.0;net452</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.0</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -19,8 +19,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="System.Data.SQLite" Version="1.0.113.1" />
-    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.113.1" />
   </ItemGroup>
 
   <ItemGroup>
