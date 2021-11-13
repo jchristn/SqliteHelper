@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netstandard2.1;netcoreapp3.0;netcoreapp3.1;net5.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1;netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>SqliteHelper</PackageId>
-    <Version>1.2.0.1</Version>
+    <Version>1.2.0.2</Version>
     <Authors>Joel Christner</Authors>
     <Product>SqliteHelper</Product>
     <Description>Deprecated; please use DatabaseWrapper.Sqlite instead.  Simple wrapper for Sqlite databases written in C#.</Description>
@@ -14,21 +14,21 @@
     <PackageLicenseUrl></PackageLicenseUrl>
     <RepositoryType>Github</RepositoryType>
     <PackageTags>sqlite database wrapper dbms</PackageTags>
-    <PackageReleaseNotes>Migrate to Microsoft.Data.Sqlite</PackageReleaseNotes>
-    <AssemblyVersion>1.2.0.0</AssemblyVersion>
-    <FileVersion>1.2.0.0</FileVersion>
+    <PackageReleaseNotes>.NET 6 support</PackageReleaseNotes>
+    <AssemblyVersion>1.2.0.2</AssemblyVersion>
+    <FileVersion>1.2.0.2</FileVersion>
     <PackageIconUrl>https://raw.githubusercontent.com/jchristn/sqlitehelper/master/assets/icon.ico</PackageIconUrl>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
     <CodeAnalysisRuleSet />
-    <DocumentationFile>C:\code\misc\sqlitehelper\sqlitehelper\sqlitehelper.xml</DocumentationFile>
+    <DocumentationFile>sqlitehelper.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
     <CodeAnalysisRuleSet />
-    <DocumentationFile>C:\Code\Misc\sqlitehelper\sqlitehelper\sqlitehelper.xml</DocumentationFile>
+    <DocumentationFile>sqlitehelper.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
